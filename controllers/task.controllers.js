@@ -33,10 +33,6 @@ export const updateTask = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const isValidTask = await Task.findById(id);
-
-        if (!isValidTask) return next(errorHandler(400, "Task is not found"));
-
         const task = await Task.findById(id);
         task.isCompleted = !task.isCompleted;
 
@@ -71,11 +67,6 @@ export const deleteTask = async (req, res, next) => {
 export const EditTask = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const isExistTask = await Task.findOne({ title: req.body.title });
-
-
-        if (isExistTask) return next(errorHandler(404, "Task is already exist"));
-
         await Task.findByIdAndUpdate(id, {
             $set: {
                 title: req.body.title

@@ -47,7 +47,7 @@ export const signIn = async (req, res, next) => {
 
         res.cookie("cookie", cookie, {
             httpOnly: true,
-            maxAge: 28 * 24 * 60 * 60 * 1000
+            maxAge: 28 * 24 * 60 * 60 * 1000,
         }).status(202).json(user);
     } catch (error) {
         next(error);
