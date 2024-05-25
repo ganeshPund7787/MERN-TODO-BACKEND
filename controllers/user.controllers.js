@@ -48,6 +48,8 @@ export const signIn = async (req, res, next) => {
         res.cookie("cookie", cookie, {
             httpOnly: true,
             maxAge: 28 * 24 * 60 * 60 * 1000,
+            secure: false,
+            sameSite: "None"
         }).status(202).json(user);
     } catch (error) {
         next(error);
@@ -102,7 +104,11 @@ export const deleteUser = async (req, res, next) => {
 
         await User.findByIdAndDelete(id);
 
-        res.status(200).clearCookie("cookie").json({
+        res.status(200).clearCookie("cookie", {
+            httpOnly: true,
+            secure: false,
+            sameSite: "None"
+        }).json({
             message: "User deleted successfuly"
         })
 
@@ -114,7 +120,11 @@ export const deleteUser = async (req, res, next) => {
 export const logout = (req, res, next) => {
     try {
 
-        res.status(200).clearCookie("cookie").json({
+        res.status(200).clearCookie("cookie", {
+            httpOnly: true,
+            secure: false,
+            sameSite: "None"
+        }).json({
             message: "User Logout successfully"
         })
     } catch (error) {
