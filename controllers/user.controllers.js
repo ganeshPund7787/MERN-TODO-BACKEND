@@ -48,7 +48,7 @@ export const signIn = async (req, res, next) => {
         res.cookie("cookie", cookie, {
             httpOnly: true,
             maxAge: 28 * 24 * 60 * 60 * 1000,
-            secure: false,
+            secure: true,
             sameSite: "None"
         }).status(202).json(user);
     } catch (error) {
@@ -106,7 +106,7 @@ export const deleteUser = async (req, res, next) => {
 
         res.status(200).clearCookie("cookie", {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "None"
         }).json({
             message: "User deleted successfuly"
@@ -122,7 +122,7 @@ export const logout = (req, res, next) => {
 
         res.status(200).clearCookie("cookie", {
             httpOnly: true,
-            secure: false,
+            secure: true,
             sameSite: "None"
         }).json({
             message: "User Logout successfully"
@@ -153,7 +153,10 @@ export const GoogleAuth = async (req, res, next) => {
             const cookie = jwt.sign({ _id: isEmailExist._id }, process.env.JWT_SECREATE_KEY);
             const { password, ...userData } = isEmailExist._doc;
             res.cookie("cookie", cookie, {
-                httpOnly: true, maxAge: 28 * 24 * 60 * 60 * 1000
+                httpOnly: true,
+                maxAge: 28 * 24 * 60 * 60 * 1000,
+                secure: true,
+                sameSite: "None"
             }).status(200).json(userData);
             console.log('already exist');
             return;
